@@ -2,10 +2,9 @@ class ArticlesController < ApplicationController
   # GET /articles
   # GET /articles.json
   before_filter :find, :only => [:edit, :update, :destroy]
+  before_filter :upcase_title, :only => [:index]
 
   def index
-    @articles = Article.all
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @articles }
@@ -85,5 +84,10 @@ class ArticlesController < ApplicationController
 
   def find
     @article = Article.find(params[:id])
+  end
+
+  def upcase_title
+    @articles = Article.all
+    @articles.map {|article| article.title.upcase!}
   end
 end
