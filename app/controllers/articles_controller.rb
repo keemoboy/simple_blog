@@ -1,10 +1,9 @@
 class ArticlesController < ApplicationController
   # GET /articles
   # GET /articles.json
-  before_filter :find, :only => [:edit, :update, :destroy]
-  before_filter :upcase_title, :only => [:index]
-
   def index
+    @articles = Article.all
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @articles }
@@ -35,12 +34,12 @@ class ArticlesController < ApplicationController
 
   # GET /articles/1/edit
   def edit
+    @article = Article.find(params[:id])
   end
 
   # POST /articles
   # POST /articles.json
   def create
-
     @article = Article.new(params[:article])
 
     respond_to do |format|
@@ -57,6 +56,7 @@ class ArticlesController < ApplicationController
   # PUT /articles/1
   # PUT /articles/1.json
   def update
+    @article = Article.find(params[:id])
 
     respond_to do |format|
       if @article.update_attributes(params[:article])
@@ -72,22 +72,12 @@ class ArticlesController < ApplicationController
   # DELETE /articles/1
   # DELETE /articles/1.json
   def destroy
+    @article = Article.find(params[:id])
     @article.destroy
 
     respond_to do |format|
       format.html { redirect_to articles_url }
       format.json { head :no_content }
     end
-  end
-
-  private
-
-  def find
-    @article = Article.find(params[:id])
-  end
-
-  def upcase_title
-    @articles = Article.all
-    @articles.map {|article| article.title.upcase!}
   end
 end

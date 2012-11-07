@@ -1,8 +1,15 @@
+<% if flash[:error] -%>
+  <p class='error'><%=h flash[:error] %></p>
+<% end -%>
+<% if flash[:notice] -%>
+  <p class='notice'><%=h flash[:notice] %></p>
+<% end -%>
+
 <div class="comment well well-small">
   <%= raw comment.body %>
 
   <small style="display: block; text-align: right;">
-    <i>Posted on: <%= comment.created_at %></i> | 
+    <i>Posted on: <%= comment.created_at %></i> |
     <%= link_to 'Destroy', article_comment_path(comment.article, comment), method: :delete, data: { confirm: 'Are you sure?' } %>
   </small>
 </div>
